@@ -1,0 +1,27 @@
+name: "Step 1: AI-Driven Test Prioritization"
+on:
+  push:
+    paths:
+      - 'services/payment-service/**'  # Only triggers if payment service changes
+
+jobs:
+  prioritize-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Testkube CLI
+        uses: kubeshop/setup-testkube@v1
+        with:
+          # Get these from your Testkube Dashboard Settings
+          organization: ${{ secrets.TK_ORG_ID }}
+          environment: ${{ secrets.TK_ENV_ID }}
+          token: ${{ secrets.TK_API_TOKEN }}
+
+      - name: Trigger Testkube AI Agent
+        run: |
+          # We pass the changed files as a variable so the AI knows what to analyze
+          testkube run ai-agent Test-Prioritizer-Agent \
+            --variable CHANGED_FILES="services/payment-service" \
+            --variable GIT_COMMIT="${{ github.sha }}"
