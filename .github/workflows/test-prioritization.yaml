@@ -3,7 +3,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'payment/services/payment-service/**' # Only triggers on payment changes
+      - 'payment/services/payment-service/**' # Updated path
 
 jobs:
   trigger-testkube:
@@ -23,4 +23,4 @@ jobs:
         run: |
           testkube run workflow payment-analysis-orchestrator \
           --variable GITHUB_SHA=${{ github.sha }} \
-          --variable CHANGED_SERVICE=payment-gateway
+          --variable CHANGED_PATH="payment/services/payment-service"
