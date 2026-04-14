@@ -11,7 +11,7 @@ func ProcessPayment(amount float64) string {
 	if amount <= 0 {
 		return "failed"
 	}
-	return "working"
+	return "success"
 }
 
 // ff
