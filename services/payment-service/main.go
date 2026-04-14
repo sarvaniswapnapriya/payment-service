@@ -7,7 +7,7 @@ func main() {
 }
 
 func ProcessPayment(amount float64) string {
-	// Simulate payment logic
+	// Simulate payment logic checking it
 	if amount <= 0 {
 		return "failed"
 	}
