@@ -3,7 +3,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'payment/services/payment-service/**' # Updated path
+      - 'payment-service/services/payment-service/**' # Updated path
 
 jobs:
   trigger-testkube:
