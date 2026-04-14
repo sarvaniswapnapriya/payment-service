@@ -1,9 +1,17 @@
 name: Testkube AI Trigger
+
 on:
   push:
     branches: [ main ]
     paths:
-      - 'services/payment-service/**' # Updated path
+      - 'services/payment-service/**'
+
+  workflow_dispatch:
+    inputs:
+      changed_path:
+        description: 'Path to simulate change'
+        required: false
+        default: 'services/payment-service/**'
 
 jobs:
   trigger-testkube:
@@ -21,6 +29,6 @@ jobs:
 
       - name: Run Orchestrator
         run: |
-          testkube run workflow payment-analysis-orchestrator \
-          --variable GITHUB_SHA=${{ github.sha }} \
-          --variable CHANGED_PATH="services/payment-service/**"
+          export CHANGED_PATH="${{ github.event.inputs.changed_path || 'services/payment-service/**' }}"
+          echo "Changed path: $CHANGED_PATH"
+          testkube run testworkflow payment-analysis-orchestrator
