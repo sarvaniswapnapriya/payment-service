@@ -10,7 +10,7 @@ import (
 
 // --- MOCK DATABASE INFRA ---
 // Change this value to trigger Test C (E2E)
-const DB_VERSION = "PostgreSQL 1.2"
+const DB_VERSION = "PostgreSQL 15.2"
 
 // --- BUSINESS LOGIC: TAX CALCULATOR ---
 // Change the logic here to trigger Test A (Logic) or Test Unit
@@ -19,7 +19,7 @@ func CalculateTax(amount float64) float64 {
 		return 0
 	}
 	return amount * 0.20 // 
-
+}
 // --- API HANDLER ---
 // Change the JSON response to trigger Test D (API Validator)
 func paymentStatusHandler(w http.ResponseWriter, r *http.Request) {
