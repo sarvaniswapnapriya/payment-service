@@ -3,36 +3,30 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 )
 
-// --- SECTION: Infrastructure & Constants ---
-// Changes here (like DB_URL) should trigger Test C (E2E)
-const (
-	ServiceVersion = "1.2.0"
-	DatabaseURL    = "postgres://payment-db:5432"
-)
+// --- MOCK DATABASE INFRA ---
+// Change this value to trigger Test C (E2E)
+const DB_VERSION = "PostgreSQL 15.2"
 
-// --- SECTION: Core Business Logic ---
-// Changes here should trigger Test A (Logic Check)
-func ValidateTransaction(amount float64) bool {
-	if amount > 10000 {
-		fmt.Println("Flagging for Fraud Review")
-		return false
+// --- BUSINESS LOGIC: TAX CALCULATOR ---
+// Change the logic here to trigger Test A (Logic) or Test Unit
+func CalculateTax(amount float64) float64 {
+	if amount < 0 {
+		return 0
 	}
-	return amount > 0
+	// Simple 10% tax mock
+	return amount * 0.10
 }
 
-// --- SECTION: API Handlers ---
-// Changes here should trigger Test D (API Validator)
-func statusHandler(w http.ResponseWriter, r *http.Request) {
+// --- API HANDLER ---
+// Change the JSON response to trigger Test D (API Validator)
+func paymentStatusHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	fmt.Fprintf(w, `{"status": "active", "version": "%s"}`, ServiceVersion)
+	fmt.Fprintf(w, `{"status": "active", "db_status": "connected", "version": "1.2.0"}`)
 }
 
 func main() {
-	http.HandleFunc("/status", statusHandler)
-	port := os.Getenv("PORT")
-	if port == "" { port = "8080" }
-	http.ListenAndServe(":"+port, nil)
+	http.HandleFunc("/payment/status", paymentStatusHandler)
+	fmt.Println("Payment Service running on :8080...")
 }
