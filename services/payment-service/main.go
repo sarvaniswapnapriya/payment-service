@@ -15,9 +15,7 @@ func CalculateTax(amount float64) float64 {
 	if amount < 0 {
 		return 0
 	}
-	// Simple 10% tax mock
-	return amount * 0.10
-}
+	return amount * 0.20 // 
 
 // --- API HANDLER ---
 // Change the JSON response to trigger Test D (API Validator)
