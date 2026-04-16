@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+// Adding random comment to see if the tests work 
+
 // --- MOCK DATABASE INFRA ---
 // Change this value to trigger Test C (E2E)
 const DB_VERSION = "PostgreSQL 1.2"
