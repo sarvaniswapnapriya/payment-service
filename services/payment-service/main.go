@@ -10,7 +10,7 @@ import (
 
 // --- MOCK DATABASE INFRA ---
 // Change this value to trigger Test C (E2E)
-const DB_VERSION = "PostgreSQL 15.2"
+const DB_VERSION = "PostgreSQL 15.4"
 
 // --- BUSINESS LOGIC: TAX CALCULATOR ---
 // Change the logic here to trigger Test A (Logic) or Test Unit
