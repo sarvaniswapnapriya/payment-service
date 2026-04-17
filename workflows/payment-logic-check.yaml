@@ -1,0 +1,23 @@
+kind: TestWorkflow
+apiVersion: testworkflows.testkube.io/v1
+metadata:
+  name: payment-logic-check
+  labels:
+    app: payment
+spec:
+  steps:
+  - name: run-tax-logic-test
+    run:
+      image: golang:1.21-alpine
+      shell: "# Create a clean isolated directory to avoid GOPATH conflicts\nmkdir
+        /tmp/test-run && cd /tmp/test-run\n\ncat <<EOF > tax_test.go\npackage main\nimport
+        \"testing\"\nfunc TestCalculateTax(t *testing.T) {\n    expected := 10.0 //
+        10% of 100\n    actual := 100.0 * 0.20 \n    // In a real scenario, you'd
+        import your main package here\n    if actual != expected { \n        t.Errorf(\"Tax
+        calculation mismatch! Expected %f, got %f\", expected, actual) \n    }\n}\nEOF\n\ngo
+        mod init demo-test\ngo test -v tax_test.go"
+status:
+  health:
+    passRate: 0.125
+    flipRate: 0.2857142857142857
+    overallHealth: 0.08928571428571429
