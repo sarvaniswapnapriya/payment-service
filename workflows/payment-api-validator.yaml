@@ -1,0 +1,21 @@
+kind: TestWorkflow
+apiVersion: testworkflows.testkube.io/v1
+metadata:
+  name: payment-api-validator
+  labels:
+    app: payment
+spec:
+  steps:
+  - name: api-contract-test
+    run:
+      image: badouralix/curl-jq
+      shell: |-
+        # In a real cluster, this points to your service URL
+        # For the demo, we simulate the API response
+        echo '{"status": "active", "db_status": "connected", "version": "1.2.0"}' > response.json
+        cat response.json | jq -e '.db_status == "connected"'
+status:
+  health:
+    passRate: 0.8888888888888888
+    flipRate: 0.25
+    overallHealth: 0.6666666666666666
