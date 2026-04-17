@@ -1,0 +1,23 @@
+kind: TestWorkflow
+apiVersion: testworkflows.testkube.io/v1
+metadata:
+  name: payment-e2e-slow
+  labels:
+    app: payment
+spec:
+  steps:
+  - name: k6-load-test
+    run:
+      image: loadimpact/k6
+      args:
+      - run
+      - --vus
+      - "10"
+      - --duration
+      - 5s
+      - github.com/your-repo/load-test.js
+status:
+  health:
+    passRate: 0
+    flipRate: 0
+    overallHealth: 0
