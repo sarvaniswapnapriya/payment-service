@@ -1,0 +1,13 @@
+kind: TestWorkflow
+apiVersion: testworkflows.testkube.io/v1
+metadata:
+  name: auth-integration-test
+  labels:
+    app: auth
+spec:
+  steps:
+  - name: jwt-validation
+    run:
+      image: node:18-alpine
+      shell: npm test jwt-auth.spec.js
+status: {}
